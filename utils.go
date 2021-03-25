@@ -17,7 +17,7 @@ func checkULimit() {
 	if runtime.GOOS == "linux" {
 		out, err := exec.Command("ulimit", "-n").Output()
 		if err != nil {
-			panic(err)
+			fmt.Fprintf(os.Stderr, "%s : ulimit cannot be read. Use this tool with caution.", err.Error())
 		}
 		s := strings.TrimSpace(string(out))
 		i, err := strconv.ParseInt(s, 10, 64)
@@ -32,7 +32,6 @@ func checkULimit() {
 }
 
 func String2IntSlice(A string) []int {
-
 	a := strings.Split(A, ",")
 	b := make([]int, 0)
 	for i, v := range a {
